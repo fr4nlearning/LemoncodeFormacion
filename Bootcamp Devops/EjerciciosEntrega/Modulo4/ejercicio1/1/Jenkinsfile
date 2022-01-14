@@ -1,0 +1,65 @@
+pipeline{
+    agent{
+        dockerfile{
+            dir '.'
+            filename 'gradle.Dockerfile'
+        }
+    }
+    stages{
+        stage('Compile'){
+            steps{
+                dir("$WORKSPACE/calculator")
+                sh '''
+                    gradlew compileJava
+                '''
+            }
+        }
+        stage('Unit Tests'){
+            steps{
+                dir("$WORKSPACE/calculator")
+                sh '''
+                    gradlew test
+                '''
+            }
+        }
+    }
+}
+
+def image
+
+pipeline{
+    agent any
+    stages{
+        stage('Build'){
+            steps{
+                script{
+                    image= docker.build("ejercicio1/dockerfile:0.1", "--pull -f ./gradle.Dockerfile .")
+                }
+            }
+        }
+    }
+    agent{
+        dockerfile{
+            dir '.'
+            filename 'gradle.Dockerfile'
+        }
+    }
+    stages{
+        stage('Compile'){
+            steps{
+                dir("$WORKSPACE/calculator")
+                sh '''
+                    gradlew compileJava
+                '''
+            }
+        }
+        stage('Unit Tests'){
+            steps{
+                dir("$WORKSPACE/calculator")
+                sh '''
+                    gradlew test
+                '''
+            }
+        }
+    }
+}
