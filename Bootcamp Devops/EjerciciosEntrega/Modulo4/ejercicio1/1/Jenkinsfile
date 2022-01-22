@@ -1,7 +1,7 @@
 pipeline{
     agent{
         dockerfile{
-            dir '.'
+            dir 'Bootcamp Devops/EjerciciosEntrega/Modulo4/ejercicio1'
             filename 'gradle.Dockerfile'
         }
     }
