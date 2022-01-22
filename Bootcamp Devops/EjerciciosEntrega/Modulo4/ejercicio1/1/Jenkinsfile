@@ -1,25 +1,27 @@
+work_dir='Bootcamp Devops/EjerciciosEntrega/Modulo4/ejercicio1'
 pipeline{
     agent{
         dockerfile{
-            dir 'Bootcamp Devops/EjerciciosEntrega/Modulo4/ejercicio1'
+            dir "$work_dir"
             filename 'gradle.Dockerfile'
         }
     }
     stages{
         stage('Compile'){
             steps{
-                dir("$WORKSPACE/calculator")
-                sh '''
-                    gradlew compileJava
-                '''
+                dir("$WORKSPACE/$work_dir/calculator"){
+                    sh './gradlew compileJava'
+
+                }
+                
             }
         }
         stage('Unit Tests'){
             steps{
-                dir("$WORKSPACE/calculator")
-                sh '''
-                    gradlew test
-                '''
+                dir("$WORKSPACE/$work_dir/calculator"){
+                    sh './gradlew test'    
+                }
+                
             }
         }
     }
