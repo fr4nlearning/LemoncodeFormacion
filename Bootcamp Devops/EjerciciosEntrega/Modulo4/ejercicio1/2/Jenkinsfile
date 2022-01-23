@@ -1,0 +1,22 @@
+work_dir='Bootcamp Devops/EjerciciosEntrega/Modulo4/ejercicio1'
+pipeline{
+    agent{
+        docker{
+            image:'gradle:6-jdk8'
+        }
+    }
+    stages{
+        stage('Compile'){
+            steps{
+                dir("$WORKSPACE/$work_dir/calculator"){
+                sh './gradlew compileJava'
+            }
+        }
+        stage('Unit Tests'){
+            steps{
+                dir("$WORKSPACE/$work_dir/calculator"){
+                sh './gradlew test'
+            }
+        }
+    }
+}
