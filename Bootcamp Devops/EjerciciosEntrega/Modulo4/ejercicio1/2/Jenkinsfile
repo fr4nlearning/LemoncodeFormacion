@@ -2,7 +2,7 @@ work_dir='Bootcamp Devops/EjerciciosEntrega/Modulo4/ejercicio1'
 pipeline{
     agent{
         docker{
-            image:'gradle:6-jdk8'
+            image 'gradle:6-jdk8'
         }
     }
     stages{
